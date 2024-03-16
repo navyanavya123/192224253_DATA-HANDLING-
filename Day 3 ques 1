@@ -1,0 +1,24 @@
+data <- data.frame(
+  Product = c("Product X", "Product Y", "Product Z", "Product W"),
+  Warehouse_A = c(200, 150, 300, 100),
+  Warehouse_B = c(150, 100, 250, 150),
+  Warehouse_C = c(100, 50, 200, 200)
+)
+
+# Print the dataframe
+print(data)
+ll=ggplot(data,aes(x=Product,y=Warehouse_A,group=1))+geom_point(color="blue")+geom_line(color="red")+labs(title="line plot",x="x axis",y="y axis")+theme_minimal()
+print(ll)
+bb=ggplot(data,aes(x=Product,y=Warehouse_B,fill=Warehouse_C))+geom_bar(stat="identity",position="dodge")+labs(title="bar plot",x="x axis",y="y axis")+theme_minimal()
+print(bb)
+library(reshape2)
+data_melted <- melt(data, id.vars = "Product", variable.name = "Warehouse", value.name = "Quantity")
+
+# Create the box plot
+ggplot(data_melted, aes(x = Warehouse, y = Quantity, fill = Warehouse)) +
+  geom_boxplot() +
+  labs(title = "Quantity of Products in Different Warehouses",
+       x = "Warehouse",
+       y = "Quantity",
+       fill = "Warehouse") +
+  theme_minimal()
