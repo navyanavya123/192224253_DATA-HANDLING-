@@ -1,0 +1,32 @@
+data <- data.frame(
+  Sector = c("Residential", "Commercial", "Industrial", "Transportation"),
+  Q1 = c(5000, 8000, 9000, 4000),
+  Q2 = c(6000, 7000, 9500, 4200),
+  Q3 = c(7000, 6000, 10000, 4300),
+  Q4 = c(6500, 7500, 9500, 4100)
+)
+ll=ggplot(data,aes(x=Sector,y=Q1,group=1))+geom_point(color="red")+geom_line(color="blue")+labs(title="line plot",x="x axis",y="y axis")+theme_minimal()
+print(ll)
+bb=ggplot(data,aes(x=Sector,y=Q1,fill=Sector))+geom_bar(stat="identity",position="dodge")+labs(title="bar plot",x="x axis",y="y axis")+theme_minimal()
+print(bb)                                                                                                                                                                                            data_norm <- data[, -1] / colSums(data[, -1])
+
+# Transpose the data
+data_transposed <- as.data.frame(t(data_norm))
+
+# Add row names as a new column (Quarter)
+data_transposed$Quarter <- rownames(data_transposed)
+
+# Reshape the data into long format
+data_long <- reshape2::melt(data_transposed, id.vars = "Quarter", variable.name = "Sector", value.name = "Proportion")
+
+# Create radar plot
+radar_plot <- ggplot(data_long, aes(x = Quarter, y = Proportion, group = Sector, color = Sector)) +
+  geom_line() +
+  geom_point() +
+  coord_polar(start = -pi/2) +  # Start the plot from the top
+ labs(title = "Energy Consumption by Sector", x = NULL, y = NULL) +
+  theme_minimal() +
+  theme(axis.text.x = element_blank())  # Hide x-axis labels
+
+# Print the radar plot
+print(radar_plot)
