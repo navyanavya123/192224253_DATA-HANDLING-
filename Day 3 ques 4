@@ -1,0 +1,27 @@
+data <- data.frame(
+  Month = c("January", "February", "March", "April"),
+  Facebook = c(12000, 12500, 13000, 13500),
+  Instagram = c(15000, 15500, 16000, 16500),
+  Twitter = c(8000, 8200, 8400, 8600)
+)                                                                                                                                                                                                                ll=ggplot(data,aes(x=Month,y=Facebook,group=1))+geom_point(color="red")+geom_line(color="blue")+labs(title="line plot",x="x axis",y="y axis")+theme_minimal()
+print(ll)                                                                                                                                                                                                stacked_bar <- ggplot(data, aes(x = Month)) +
+  geom_bar(aes(y = Facebook, fill = "Facebook"), stat = "identity") +
+  geom_bar(aes(y = Instagram, fill = "Instagram"), stat = "identity") +
+  geom_bar(aes(y = Twitter, fill = "Twitter"), stat = "identity") +
+  labs(title = "Engagement by Month", x = "Month", y = "Engagement") +
+  #scale_fill_manual(values = c("Facebook" = "blue", "Instagram" = "green", "Twitter" = "red")) +
+  theme_minimal()
+
+# Print the stacked bar chart
+print(stacked_bar)
+data_melted <- melt(data, id.vars = "Year", variable.name = "Program", value.name = "Followers")
+
+# Create the histogram
+ggplot(data_melted, aes(x = Followers, fill = Program)) +
+  geom_histogram(binwidth = 500, position = "dodge", alpha = 0.7) +
+  labs(title = "Distribution of Social Media Followers",
+       x = "Number of Followers",
+       y = "Frequency",
+       fill = "Program") +
+  #scale_fill_manual(values = c("Undergraduate" = "skyblue", "Postgraduate" = "lightgreen", "International" = "lightcoral")) +
+  theme_minimal()
