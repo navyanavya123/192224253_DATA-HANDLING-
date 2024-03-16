@@ -1,0 +1,13 @@
+data <- data.frame(
+  Year = c(2019, 2020, 2021, 2022),
+  City_A_mm = c(1200, 1150, 1230, 1180),
+  City_B_mm = c(800, 850, 870, 900),
+  City_C_mm = c(900, 950, 990, 950)
+)
+sc=ggplot(data,aes(x=factor(Year),y=City_A_mm,color="blue"))+geom_point(size=4)+labs(title="scatter plot",x="x axis",y="y axis")+theme_minimal()
+print(sc)
+pp=ggplot(data,aes(x="",y=City_B_mm,fill=Year))+geom_bar(stat="identity",width=1)+coord_polar("y",start=0)+labs(title="pie chart",x="year",y="city")+theme_minimal()
+print(pp)
+dl=reshape2::melt(data,id.vars="Year")
+bg=ggplot(dl,aes(x=Year,y=value,fill=variable))+geom_bar(stat="identity",position="dodge")+labs(title="grouped bar",x="x axis",y="y axis")+theme_minimal()
+print(bg)
